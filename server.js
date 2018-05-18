@@ -14,13 +14,13 @@ io.on('connection', function(socket){
         console.log('Message Received: '+message.text);
 
         //server broadcast back to client
-        socket.broadcast.emit('message', message);
+        io.emit('message', message);
     });
 
     //server broadcast back to client
     socket.emit('message', {
         text:'Welcome to the chat applicaiton!'
-    })
+    });
 });
 
 

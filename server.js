@@ -4,6 +4,10 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var moment=require('moment');
+
+
+
 app.use(express.static(__dirname+'/public'));
 
 io.on('connection', function(socket){
@@ -12,14 +16,16 @@ io.on('connection', function(socket){
     //server listen
     socket.on('message', function(message){
         console.log('Message Received: '+message.text);
-
+        message.timestamp=moment().valueOf();
         //server broadcast back to client
         io.emit('message', message);
     });
 
     //server broadcast back to client
     socket.emit('message', {
-        text:'Welcome to the chat applicaiton!'
+        name:'System',
+        text: 'Welcome to the chat applicaiton!',
+        timestamp: moment().valueOf()
     });
 });
 
